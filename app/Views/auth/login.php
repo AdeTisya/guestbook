@@ -1,5 +1,5 @@
 <!-- halaman login akan menggunakan kerangka header dan footer yang sudah didefinisikan di template tersebut -->
-<?= $this->extend('template/header_footer_auth'); ?>
+<?= $this->extend('template/header_footer_auth', ['cssFile' => 'login.css']); ?>
 
 <?= $this->section('content-auth') ?>
 
