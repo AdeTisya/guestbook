@@ -1,4 +1,4 @@
-<?= $this->extend('template/admin_header_footer') ?>
+<?php echo $this->extend('template/admin_header_footer', ['cssFile' => 'admin.css']); ?>
 <?= $this->section('content-admin') ?>
 
 <div class="container-fluid">
@@ -236,7 +236,6 @@
 </div>
 
 <script <?= csp_script_nonce() ?>>
-
 // Search functionality
 document.getElementById('searchInput').addEventListener('keyup', function() {
     const searchValue = this.value.toLowerCase();

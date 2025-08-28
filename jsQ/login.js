@@ -59,3 +59,88 @@ function login() {
     },
   });
 }
+
+
+ // Create animated particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.querySelector('input[type="password"], input[type="text"]');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate login process
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Simulate login failure for demo
+                document.getElementById('login-error-message').style.display = 'block';
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Hide error after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('login-error-message').style.display = 'none';
+                }, 3000);
+            }, 2000);
+        });
+
+        // Add input focus effects
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('.input-group-text').style.backgroundColor = '#4CAF50';
+                this.parentElement.querySelector('.input-group-text').style.transform = 'scale(1.1)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.querySelector('.input-group-text').style.backgroundColor = '#000000';
+                this.parentElement.querySelector('.input-group-text').style.transform = 'scale(1)';
+            });
+        });
+
+        // Initialize particles when page loads
+        document.addEventListener('DOMContentLoaded', createParticles);
+
+        // Add mouse move effect
+        document.addEventListener('mousemove', function(e) {
+            const loginCard = document.querySelector('.login-card-body');
+            const rect = loginCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            loginCard.style.transform = `perspective(1000px) rotateY(${(x - rect.width / 2) / 20}deg) rotateX(${-(y - rect.height / 2) / 20}deg)`;
+        });
+
+        document.querySelector('.login-card-body').addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+        });

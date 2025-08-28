@@ -1,4 +1,4 @@
-<?= $this->extend('template/admin_header_footer') ?>
+<?= $this->extend('template/admin_header_footer',  ['cssFile' => 'admin.css']) ?>
 <?= $this->section('content-admin') ?>
 
 <div class="container-fluid">
