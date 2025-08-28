@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // ===========================================================================================
-// Akses base URL → diarahkan ke Controller User\UserForm fungsi index
+// Akses base URL diarahkan ke Controller User\UserForm fungsi index
 $routes->get('/', 'User\UserForm::index');
 
 // Route untuk menampilkan form
