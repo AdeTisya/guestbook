@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(135deg, #00A700 0%, #193919) !important;
+    background: linear-gradient(110deg, #0093DD 19%,#00458E) !important;
     font-family: 'ABeeZee', sans-serif;
     min-height: 100vh;
     padding: 0;
@@ -12,7 +12,7 @@ body {
     position: absolute;
     top: 10px;
     left: 20px;
-    background-color: #43d554;
+    background-color: #b1e5ff;
     padding: 8px 15px;
     border-radius: 5px;
     font-weight: bold;
@@ -105,8 +105,8 @@ body {
 
 /* Form Styles */
 .form-container {
-    background: #E8F5E8;
-    border-radius: clamp(15px, 4vw, 40px) 0 0 clamp(15px, 4vw, 40px);
+    background: #CEEFFF;
+    border-radius: clamp(50px, 4vw, 100px) 0 0 clamp(50px, 4vw, 100px);
     padding: clamp(15px, 3vw, 25px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
@@ -119,7 +119,7 @@ body {
 
 .form-label {
     font-weight: 600;
-    color: #2E7D32;
+    color: #000000;
     margin-bottom: 6px;
     font-size: clamp(0.85rem, 1.5vw, 0.95rem);
 }
@@ -137,14 +137,14 @@ body {
 
 .form-control:focus,
 .form-select:focus {
-    border-color: #4CAF50;
+    border-color: #b5b5b5;
     box-shadow: 0 0 0 0.15rem rgba(76, 175, 80, 0.25);
     background: white;
     outline: none;
 }
 
 .btn-submit {
-    background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+    background: linear-gradient(135deg, #0093DD 0%, #00458E 100%);
     border: none;
     border-radius: 25px;
     color: white;
@@ -159,13 +159,13 @@ body {
 
 .btn-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4);
-    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+    box-shadow: 0 8px 25px rgba(59, 165, 207, 0.4);
+    background: linear-gradient(135deg, #54baed 0%, #046fa4 100%);
 }
 
 /* Photo Section */
 .photo-section {
-    background: #E8F5E8;
+    background: #CEEFFF;
     border-radius: 15px;
     padding: clamp(15px, 3vw, 20px);
     height: 100%;
@@ -189,7 +189,7 @@ body {
 
 .photo-section h5 {
     font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-    color: #2E7D32;
+    color: #040404;
     font-weight: 600;
 }
 
@@ -197,7 +197,7 @@ body {
     width: clamp(120px, 20vw, 180px);
     height: clamp(120px, 20vw, 180px);
     border-radius: 12px;
-    border: 3px solid #E8F5E8;
+    border: 3px solid #CEEFFF;
     object-fit: cover;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -205,21 +205,21 @@ body {
 }
 
 .btn-capture {
-    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+    background: linear-gradient(135deg, #298df1 0%, #1e6fe8 100%);
     border: none;
     border-radius: 50px;
-    color: white;
+    color: rgb(255, 255, 255);
     font-weight: 600;
     padding: clamp(8px, 1.5vw, 10px) clamp(15px, 3vw, 25px);
     font-size: clamp(0.8rem, 1.5vw, 0.9rem);
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 5px 15px rgba(22, 109, 239, 0.3);
 }
 
 .btn-capture:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-    background: linear-gradient(135deg, #FF5252 0%, #FF6B6B 100%);
+    box-shadow: 0 8px 25px rgba(113, 191, 240, 0.4);
+    background: linear-gradient(135deg, #298df1 0%, #0a63bd 100%);
 }
 
 /* Contact Section */
@@ -259,12 +259,12 @@ body {
 }
 
 .alert-success {
-    background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+    background: linear-gradient(135deg, #298df1 0%, #1e6fe8 100%);
     color: white;
 }
 
 .alert-danger {
-    background: linear-gradient(135deg, #F44336 0%, #FF6B6B 100%);
+    background: linear-gradient(135deg, #298df1 0%, #025bb4 100%);
     color: white;
 }
 
@@ -275,7 +275,7 @@ body {
 }
 
 .modal-header {
-    background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+    background: linear-gradient(135deg, #298df1 0%, #014b95 100%);
     color: white;
     border: none;
 }
@@ -288,7 +288,7 @@ body {
 }
 
 .btn-camera {
-    background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+    background: linear-gradient(135deg, #298df1 0%, #1e6fe8 100%);
     border: none;
     border-radius: 25px;
     color: white;

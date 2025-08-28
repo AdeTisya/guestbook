@@ -1,242 +1,3 @@
-<?= $this->extend('template/header_footer_auth', ['cssFile' => 'userform.css']); ?>
-<?= $this->section('content-auth') ?>
-
-<!-- Flash Message Alert -->
-<?php if (session()->getFlashdata('message')): ?>
-    <div class="alert alert-<?= session()->getFlashdata('message_type') === 'success' ? 'success' : 'danger' ?> alert-dismissible fade show" role="alert">
-        <?= session()->getFlashdata('message') ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<?php endif; ?>
-
-<!-- Validation Errors -->
-<?php if (session()->getFlashdata('errors')): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Kesalahan:</strong>
-        <ul class="mb-0 mt-2">
-            <?php foreach (session()->getFlashdata('errors') as $error): ?>
-                <li><?= esc($error) ?></li>
-            <?php endforeach; ?>
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<?php endif; ?>
-
-<div class="main-container">
-    <div class="head-admin">
-        ADMIN
-    </div>
-    <div class="background-accent"></div>
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="row g-2 g-md-3 align-items-start">
-                    
-                    <!-- LEFT COLUMN: WELCOME SECTION -->
-                    <div class="col-lg-4 col-md-12  order-lg-1">
-                        <div class="welcome-section">
-                            <!-- Logo Container -->
-                            <div id="logogk" class="text-center mb-3">
-                                <img src="<?= base_url('dokumen/icon/logoGK.png') ?>" 
-                                     alt="Logo Gunungkidul" 
-                                     class="img-fluid">
-                            </div>
-
-                            <!-- Icon Container -->
-                            <div id="icongk" class="text-center mb-3">
-                                <img src="<?= base_url('dokumen/icon/iconGk.png') ?>" 
-                                     alt="Icon Gunungkidul" 
-                                     class="img-fluid">
-                            </div>
-                            
-                            <h1 class="welcome-title">
-                                Selamat Datang di Portal Buku Tamu diskominfo Gunungkidul
-                            </h1>
-                            <p class="welcome-description">
-                                Silakan lengkapi data kunjungan Anda untuk keperluan dokumentasi dan pelayanan.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN: FORM SECTION -->
-                    <div class="col-lg-8 col-md-12 order-2 order-lg-2">
-                        <div class="form-container">
-                            <div class="row g-2">
-                                
-                                <!-- FORM INPUTS -->
-                                <div class="col-lg-8 col-md-7 col-12">
-                                    <form method="POST" action="<?= base_url('user/form/submit') ?>" enctype="multipart/form-data" id="tamuForm">
-                                        <?= csrf_field() ?>
-                                        
-                                        <div class="mb-2">
-                                            <label for="nama" class="form-label">Nama : <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="nama" name="nama" 
-                                                   placeholder="Masukkan nama lengkap" 
-                                                   value="<?= old('nama') ?>" required>
-                                            <div class="invalid-feedback" id="nama-error"></div>
-                                        </div>
-                                        
-                                        <div class="mb-2">
-                                            <label for="dari" class="form-label">Dari : <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="dari" name="dari" 
-                                                   placeholder="Contoh: PT.Jaya Abadi" 
-                                                   value="<?= old('dari') ?>" required>
-                                            <div class="invalid-feedback" id="dari-error"></div>
-                                        </div>
-                                        
-                                        <div class="mb-2">
-                                            <label for="jam_datang" class="form-label">Jam Datang : <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="jam_datang" name="jam_datang" 
-                                                placeholder="Loading waktu..." readonly required
-                                                value="<?= old('jam_datang') ?>">
-                                            <div class="invalid-feedback" id="jam_datang-error"></div>
-                                        </div>
-                                        
-                                        <div class="mb-2">
-                                            <label class="form-label">Alamat/Asal : <span class="text-danger">*</span></label>
-                                            <div class="row g-1">
-                                                <div class="col-12">
-                                                    <input type="text" class="form-control mt-1" id="asal" name="asal" 
-                                                           placeholder="Masukkan Alamat lengkap" 
-                                                           value="<?= old('asal') ?>" required>
-                                                    <div class="invalid-feedback" id="asal-error"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-2">
-                                            <label for="no_telp" class="form-label">No. Telepon : <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="no_telp" name="no_telp" 
-                                                   placeholder="Contoh: 081390123163" 
-                                                   value="<?= old('no_telp') ?>" required>
-                                            <div class="invalid-feedback" id="no_telp-error"></div>
-                                        </div>
-                                        
-                                        <div class="mb-2">
-                                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin : <span class="text-danger">*</span></label>
-                                            <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" required>
-                                                <option value="" disabled <?= !old('jenis_kelamin') ? 'selected' : '' ?>>Pilih Jenis Kelamin</option>
-                                                <?php foreach ($genders as $gender): ?>
-                                                    <option value="<?= $gender ?>" <?= old('jenis_kelamin') === $gender ? 'selected' : '' ?>>
-                                                        <?= $gender ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                            <div class="invalid-feedback" id="jenis_kelamin-error"></div>
-                                        </div>
-                                        
-                                        <div class="mb-3">
-                                            <label for="keperluan" class="form-label">Keperluan : <span class="text-danger">*</span></label>
-                                            <textarea class="form-control" id="keperluan" name="keperluan" rows="2" 
-                                                      placeholder="Jelaskan keperluan Anda" required><?= old('keperluan') ?></textarea>
-                                            <div class="invalid-feedback" id="keperluan-error"></div>
-                                        </div>
-                                        
-                                        <input type="hidden" id="foto_data" name="foto_data" required>
-                                        
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-submit" id="submitBtn">
-                                                <i class="fas fa-paper-plane me-1"></i> KIRIM
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                
-                                <!-- PHOTO CAPTURE SECTION -->
-                                <div class="col-lg-4 col-md-5 col-12">
-                                    <div class="photo-section">
-                                        <h5 class="text-center mb-2">Foto Tamu <span class="text-danger">*</span></h5>
-                                        <img id="photo-preview" class="photo-preview" 
-                                             src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f8f9fa'/%3E%3Ccircle cx='100' cy='100' r='40' fill='%236c757d'/%3E%3Cpath d='M100 80 L100 120 M80 100 L120 100' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" 
-                                             alt="Photo preview">
-                                        <div class="text-center mt-2">
-                                            <button type="button" class="btn btn-capture" id="open-camera">
-                                                <i class="fas fa-camera me-1"></i> Ambil Foto
-                                            </button>
-                                            <div id="photo-status" class="mt-1 text-muted small"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- CONTACT INFORMATION -->
-    <div class="contact-section">
-        <div class="container">
-            <div class="row justify-content-center g-1">
-                <div class="col-auto">
-                    <div class="contact-item">
-                        <i class="fab fa-instagram"></i>
-                        <span>kominfoGunungkidul</span>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>kominfo@Gunungkidulkab.go.id</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- CAMERA MODAL -->
-<div class="modal fade" id="camera-modal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-describedby="cameraModalDescription">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cameraModalLabel">
-                    <i class="fas fa-camera me-2"></i> Ambil Foto
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup modal kamera"></button>
-            </div>
-            <div class="modal-body text-center">
-                <div id="cameraModalDescription" class="visually-hidden">
-                    Modal untuk mengambil foto tamu menggunakan kamera
-                </div>
-                <video id="camera-view" class="camera-view img-fluid" autoplay playsinline muted aria-label="Preview kamera"></video>
-                <canvas id="camera-canvas" style="display:none;" aria-hidden="true"></canvas>
-                <div id="camera-status" class="mt-2 text-muted" role="status" aria-live="polite"></div>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-camera" id="capture-btn" aria-describedby="capture-help">
-                    <i class="fas fa-camera me-2"></i> Ambil Foto
-                </button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Batal mengambil foto">
-                    <i class="fas fa-times me-1"></i> Batal
-                </button>
-                <div id="capture-help" class="visually-hidden">
-                    Klik untuk mengambil foto dari kamera
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Loading Modal -->
-<div class="modal fade" id="loading-modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="loadingModalLabel" aria-describedby="loadingModalDescription">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-body text-center p-4">
-                <div id="loadingModalDescription" class="visually-hidden">
-                    Modal loading untuk menampilkan proses penyimpanan data
-                </div>
-                <div class="spinner-border text-primary" role="status" aria-label="Loading">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="mt-2" id="loadingModalLabel" aria-live="polite">Menyimpan data...</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script <?= csp_script_nonce() ?>>
 // Inisialisasi variabel global
 let cameraModal = null;
 let loadingModal = null;
@@ -274,12 +35,12 @@ function showCameraError(error) {
         Swal.fire({
             icon: 'error',
             title: 'Kamera Tidak Dapat Diakses',
-            html: `${errorMessage}<br><br>
-                  <strong>Pastikan:</strong><br>
-                  1. Anda menggunakan HTTPS atau localhost<br>
-                  2. Tidak ada aplikasi lain yang menggunakan kamera<br>
-                  3. Browser mendukung WebRTC (Chrome/Firefox/Edge terbaru)<br>
-                  4. Anda telah memberikan izin kamera`,
+            html: errorMessage + '<br><br>' +
+                  '<strong>Pastikan:</strong><br>' +
+                  '1. Anda menggunakan HTTPS atau localhost<br>' +
+                  '2. Tidak ada aplikasi lain yang menggunakan kamera<br>' +
+                  '3. Browser mendukung WebRTC (Chrome/Firefox/Edge terbaru)<br>' +
+                  '4. Anda telah memberikan izin kamera',
             confirmButtonColor: '#3085d6',
         });
     } else {
@@ -522,9 +283,9 @@ function validateForm() {
                     break;
                     
                 case 'asal':
-                    if (fieldValue.length < 10) {
+                    if (fieldValue.length < 5) {
                         element.classList.add('is-invalid');
-                        if (errorElement) errorElement.textContent = 'Alamat minimal 10 karakter';
+                        if (errorElement) errorElement.textContent = 'Alamat minimal 5 karakter';
                         isValid = false;
                     }
                     break;
@@ -797,30 +558,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-
-    // Highlight field yang kosong
-    document.querySelectorAll('[required]').forEach(field => {
-        field.addEventListener('blur', function() {
-            if (!this.value) {
-                this.classList.add('is-invalid');
-                
-                // Tampilkan pesan error
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Field Kosong',
-                    text: 'Harap lengkapi form ini sebelum melanjutkan',
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    toast: true,
-                    position: 'top-end'
-                });
-            } else {
-                this.classList.remove('is-invalid');
-            }
-        });
-    });
-
     
     // Event untuk select jenis kelamin
     const jenisKelaminSelect = document.getElementById('jenis_kelamin');
@@ -851,6 +588,3 @@ window.addEventListener('error', function(e) {
 window.addEventListener('unhandledrejection', function(e) {
     console.error('Unhandled promise rejection:', e.reason);
 });
-</script>
-
-<?= $this->endSection() ?>

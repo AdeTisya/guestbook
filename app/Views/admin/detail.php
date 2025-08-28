@@ -1,4 +1,4 @@
-<?= $this->extend('template/admin_header_footer') ?>
+<?= $this->extend('template/admin_header_footer',  ['cssFile' => 'admin.css']) ?>
 <?= $this->section('content-admin') ?>
 
 <div class="container-fluid">
@@ -67,12 +67,6 @@
                     <h6 class="m-0 font-weight-bold text-primary">Aksi</h6>
                 </div>
                 <div class="card-body text-center">
-                    <a href="<?= base_url('admin/tamu/print/' . $tamu['id']) ?>" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-print"></i>
-                        </span>
-                        <span class="text">Cetak</span>
-                    </a>
                     <button class="btn btn-danger btn-icon-split delete-btn" data-id="<?= $tamu['id'] ?>">
                         <span class="icon text-white-50">
                             <i class="fas fa-trash"></i>

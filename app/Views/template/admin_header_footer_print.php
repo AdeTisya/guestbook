@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'Print Document' ?></title>
+
+    <!-- Custom CSS -->
+    <?php if (isset($cssFile)): ?>
+        <link href="<?= base_url('css/' . $cssFile) ?>" rel="stylesheet">
+    <?php endif; ?>
     <style>
         body { font-family: Arial, sans-serif; }
         .border { border: 1px solid #000; }

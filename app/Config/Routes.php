@@ -18,6 +18,24 @@ $routes->post('user/form/submit', 'User\UserForm::submitForm');
 
 
 // ===========================================================================================
+// Akses halaman login dengan filter 'cek_percobaan_login'
+$routes->get('login', 'Auth\Login::index', ['filter' => 'cek_percobaan_login']);
+
+// ===========================================================================================
+// User submit POST ke /trxlogin dengan filter 'cek_percobaan_login'
+$routes->post('/trxlogin', 'Auth\Login::eseclogin', ['filter' => 'cek_percobaan_login']);
+
+// ===========================================================================================
+// Rute halaman terkunci
+$routes->get('/locked', 'Auth\Login::locked');
+
+// ===========================================================================================
+// Route logout (GET & POST)
+$routes->get('logout', 'Auth\Login::logout');
+$routes->post('logout', 'Auth\Login::logout');
+
+
+// ===========================================================================================
 // Grup route admin dengan filter 'auth'
 $routes->group('admin', ['filter' => 'auth'], function($routes) {
 
@@ -34,23 +52,6 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
     // Export route
     $routes->post('export', 'Admin\Dashboard::export');
 });
-
-// ===========================================================================================
-// Akses halaman login dengan filter 'cek_percobaan_login'
-$routes->get('login', 'Auth\Login::index', ['filter' => 'cek_percobaan_login']);
-
-// ===========================================================================================
-// User submit POST ke /trxlogin dengan filter 'cek_percobaan_login'
-$routes->post('/trxlogin', 'Auth\Login::eseclogin', ['filter' => 'cek_percobaan_login']);
-
-// ===========================================================================================
-// Rute halaman terkunci
-$routes->get('/locked', 'Auth\Login::locked');
-
-// ===========================================================================================
-// Route logout (GET & POST)
-$routes->get('logout', 'Auth\Login::logout');
-$routes->post('logout', 'Auth\Login::logout');
 
 // ===========================================================================================
 // Route cadangan untuk submit form user (dikomentari)

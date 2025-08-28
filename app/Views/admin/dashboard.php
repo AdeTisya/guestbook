@@ -1,4 +1,4 @@
-<?= $this->extend('template/admin_header_footer') ?>
+<?php echo $this->extend('template/admin_header_footer', ['cssFile' => 'admin.css']); ?>
 <?= $this->section('content-admin') ?>
 
 <div class="container-fluid">
@@ -99,9 +99,7 @@
                         </div>
                     </div>
                 </form>
-                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#exportModal">
-                    <i class="fas fa-file-export fa-sm"></i> Export
-                </button>
+                
             </div>
         </div>
         <div class="card-body">
@@ -155,80 +153,38 @@
 </div>
 
 <!-- Photo Preview Modal -->
-<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Foto Tamu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="photoModalLabel">Foto Tamu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
                 <img id="modalPhoto" src="" class="img-fluid" alt="Foto Tamu">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Export Modal -->
-<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exportModalLabel">Export Data Tamu</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="exportForm" action="<?= base_url('admin/export') ?>" method="post">
-                    <div class="form-group">
-                        <label for="exportFormat">Format Export</label>
-                        <select class="form-control" id="exportFormat" name="format">
-                            <option value="excel">Excel</option>
-                            <option value="pdf">PDF</option>
-                            <option value="csv">CSV</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="dateRange">Rentang Tanggal</label>
-                        <div class="input-group">
-                            <input type="date" class="form-control" name="start_date">
-                            <div class="input-group-prepend input-group-append">
-                                <span class="input-group-text">s/d</span>
-                            </div>
-                            <input type="date" class="form-control" name="end_date">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                <button class="btn btn-primary" type="button" id="exportSubmit">Export</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+
+<!-- Delete Confirmation Modal - Bootstrap 5 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Hapus Data Tamu</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 Apakah Anda yakin ingin menghapus data tamu ini?
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                 <a class="btn btn-danger" id="deleteConfirm" href="#">Hapus</a>
             </div>
         </div>
@@ -236,78 +192,65 @@
 </div>
 
 <script <?= csp_script_nonce() ?>>
+// Fixed JavaScript for admin dashboard - remove duplicates and fix Bootstrap 5 compatibility
 
-// Search functionality
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    const searchValue = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#dataTable tbody tr');
-    
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchValue) ? '' : 'none';
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function() {
+            const searchValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            });
+        });
+    }
+
+    // Delete button handler - only one instance
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = this.getAttribute('data-id');
+            const deleteConfirm = document.getElementById('deleteConfirm');
+            if (deleteConfirm) {
+                deleteConfirm.href = `<?= base_url('admin/tamu/delete/') ?>${id}`;
+            }
+            
+            // Bootstrap 5 compatible modal show
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            deleteModal.show();
+        });
     });
-});
 
-// Delete button handler
-document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const id = this.getAttribute('data-id');
-        document.getElementById('deleteConfirm').href = `<?= base_url('admin/tamu/delete/') ?>${id}`;
-        $('#deleteModal').modal('show');
+    // View photo handler - only one instance
+    document.querySelectorAll('.view-photo').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const photoData = this.getAttribute('data-photo');
+            const modalPhoto = document.getElementById('modalPhoto');
+            if (modalPhoto && photoData) {
+                modalPhoto.src = photoData;
+                const photoModal = new bootstrap.Modal(document.getElementById('photoModal'));
+                photoModal.show();
+            }
+        });
     });
-});
 
-// Export submit handler
-document.getElementById('exportSubmit').addEventListener('click', function() {
-    document.getElementById('exportForm').submit();
-});
 
-// View photo handler
-document.querySelectorAll('.view-photo').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const photoData = this.getAttribute('data-photo');
-        document.getElementById('modalPhoto').src = photoData;
-        $('#photoModal').modal('show');
-    });
-});
-
-// Cancel button handler for modals
-document.querySelectorAll('[data-dismiss="modal"]').forEach(btn => {
-    btn.addEventListener('click', function() {
-        $(this).closest('.modal').modal('hide');
-    });
-});
-
-document.querySelectorAll('.view-photo').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const photoData = this.getAttribute('data-photo');
-        document.getElementById('modalPhoto').src = photoData;
-        $('#photoModal').modal('show');
-    });
-});
-
-// Delete button handler
-document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const id = this.getAttribute('data-id');
-        document.getElementById('deleteConfirm').href = `<?= base_url('admin/tamu/delete/') ?>${id}`;
-        $('#deleteModal').modal('show');
-    });
-});
-
-// Export submit handler
-document.getElementById('exportSubmit').addEventListener('click', function() {
-    document.getElementById('exportForm').submit();
-});
-
-// Search functionality
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    const searchValue = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#dataTable tbody tr');
-    
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchValue) ? '' : 'none';
+    // Modal close handlers
+    document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+        });
     });
 });
 </script>

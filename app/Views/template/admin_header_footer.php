@@ -16,13 +16,13 @@
     <!-- SB Admin 2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.1.4/css/sb-admin-2.min.css" rel="stylesheet">
     
-    <!-- Custom CSS -->
-    <style>
-        /* Add your custom styles here if needed */
-    </style>
+   <!-- Custom CSS -->
+    <?php if (isset($cssFile)): ?>
+        <link href="<?= base_url('css/' . $cssFile) ?>" rel="stylesheet">
+    <?php endif; ?>
 </head>
 
-<body id="page-top">
+<body >
 
     <!-- Page Wrapper -->
     <div id="wrapper">

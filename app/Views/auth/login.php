@@ -13,7 +13,7 @@
     <div class="login-logo">
         <h4>Login Page</h4>
     </div>
-    <div class="card">
+
         <div class="card-body login-card-body">
             <p class="login-box-msg">Login untuk melanjutkan proses</p>
 
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-    </div>
+   
 
 
      <!-- Script untuk mendefinisikan base URL -->

@@ -31,10 +31,11 @@ class Dashboard extends BaseController
                                               ->where('created_at <=', $endDate)
                                               ->countAllResults(),
             'tamuPerempuan' => $this->tamuModel->where('jenis_kelamin', 'Perempuan')->countAllResults(),
-            'tamu' => $this->tamuModel->orderBy('jam_datang', 'DESC')->findAll(10)
+            'tamu' => $this->tamuModel->orderBy('jam_datang', 'DESC')->findAll(10),
+            'cssFile' => 'admin.css'
         ];
 
-        return view('admin/dashboard', $data);
+        return view('admin/dashboard', $data );
     }
 
     public function detail($id)
@@ -47,7 +48,8 @@ class Dashboard extends BaseController
 
         $data = [
             'title' => 'Detail Tamu',
-            'tamu' => $tamu
+            'tamu' => $tamu,
+            'cssFile' => 'admin.css'
         ];
 
         return view('admin/detail', $data);
@@ -72,7 +74,8 @@ class Dashboard extends BaseController
 
         $data = [
             'title' => 'Cetak Data Tamu',
-            'tamu' => $tamu
+            'tamu' => $tamu,
+            'cssFile' => 'admin.css'
         ];
 
         return view('admin/print', $data);
