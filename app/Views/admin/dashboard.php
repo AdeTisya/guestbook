@@ -192,6 +192,7 @@
 </div>
 
 <script <?= csp_script_nonce() ?>>
+<<<<<<< HEAD
 // Fixed JavaScript for admin dashboard - remove duplicates and fix Bootstrap 5 compatibility
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -223,6 +224,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
             deleteModal.show();
         });
+=======
+// Search functionality
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    const searchValue = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#dataTable tbody tr');
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchValue) ? '' : 'none';
+>>>>>>> 7c9c2ed095255f642d571be8b1a7b391c3da5af7
     });
 
     // View photo handler - only one instance
